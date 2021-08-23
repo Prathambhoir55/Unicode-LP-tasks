@@ -7,10 +7,45 @@
     <title>TodoHome</title>
 </head>
 <body>
-    <form action="/todo" method="post"> {% csrf_token %}
-        <input type="text" name="taskname">
-        <input type="datetime-local" name="tasktime" id="">
-        <input type="submit" value="Submit">
-    </form>
+    <table>
+        <thead>
+            <tr>
+                <td>Sr. No.</td>
+                <td>Name</td>
+                <td>Time</td>
+                <td>Description</td>
+                <td>Done?</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            {%for task in Tasks%}
+            {%for check in checks%}
+            <tr>
+                <td>
+                    {{task.id}}
+                </td>
+                <td>
+                    {{task.task_name}}
+                </td>
+                <td>
+                    {{task.task_time}}
+                </td>
+                <td>
+                    {{task.task_desc}}
+                </td>
+                <td>
+                    {% if check.task_done %}
+                        Done
+                    {% endif %}
+                    {% if  not check.task_done %}
+                        Pending
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

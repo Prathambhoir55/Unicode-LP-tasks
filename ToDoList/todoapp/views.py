@@ -1,9 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from . import forms
+from . import models
 import requests
 
 
 def TodoHome(request):
-    return render(request,'TodoHome.html')
+    Tasks = models.Task.objects.all()
+    checks = models.TaskDone.objects.all()
+    print(Tasks)
+    return render(request,'TodoHome.html', {'Tasks': Tasks, 'checks': checks})
 
 def TodoInput(request):
     name=request.POST.get('taskname')
