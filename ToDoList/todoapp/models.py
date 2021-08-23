@@ -2,9 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Task(models.Model):
-    id = models.AutoField(primary_key=True) #, default=0) 
+    id = models.AutoField(primary_key=True) 
     task_name = models.CharField(max_length=100)
-    task_time = models.DateTimeField()
+    task_time = models.TimeField()
     task_desc = models.TextField(null=True, blank=True)
 
     def __str__(self):

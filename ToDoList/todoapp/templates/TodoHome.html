@@ -20,7 +20,7 @@
 
         <tbody>
             {%for task in Tasks%}
-            {%for check in checks%}
+            <!-- {%for check in checks%} -->
             <tr>
                 <td>
                     {{task.id}}
@@ -43,9 +43,13 @@
                     {% endif %}
                 </td>
             </tr>
-            {% endfor %}
+            <!-- {% endfor %} -->
             {% endfor %}
         </tbody>
     </table>
+    <br>
+    <form action="/todo-create" method="post"> {% csrf_token %}
+        <button>Create</button>
+    </form>
 </body>
 </html>

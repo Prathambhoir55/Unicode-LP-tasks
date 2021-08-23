@@ -10,7 +10,12 @@ def TodoHome(request):
     print(Tasks)
     return render(request,'TodoHome.html', {'Tasks': Tasks, 'checks': checks})
 
-def TodoInput(request):
-    name=request.POST.get('taskname')
-    time=request.POST.get('tasktime')
-    return render(request,'TodoInput.html',{'name': name, 'time': time})
+def TodoCreate(request):
+    form = forms.TaskForm()
+
+    if request.method == 'POST':
+        form = forms.TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('Tasks')
+    return render(request, 'TodoCreate.html',{'form': form})
