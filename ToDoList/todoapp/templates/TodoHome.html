@@ -20,7 +20,6 @@
 
         <tbody>
             {%for task in Tasks%}
-            <!-- {%for check in checks%} -->
             <tr>
                 <td>
                     {{task.id}}
@@ -35,21 +34,29 @@
                     {{task.task_desc}}
                 </td>
                 <td>
-                    {% if check.task_done %}
+                    {% if task.task_done %}
                         Done
-                    {% endif %}
-                    {% if  not check.task_done %}
+                    {% else %}
                         Pending
                     {% endif %}
                 </td>
+                <td>
+                    <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
+                        <button>Update</button>
+                    </form>
+                </td>
             </tr>
-            <!-- {% endfor %} -->
             {% endfor %}
         </tbody>
     </table>
+    
     <br>
     <form action="/todo-create" method="post"> {% csrf_token %}
         <button>Create</button>
+    </form>
+    <br>
+    <!-- <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
+        <button>Update</button> -->
     </form>
 </body>
 </html>

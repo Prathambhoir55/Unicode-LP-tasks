@@ -6,9 +6,7 @@ import requests
 
 def TodoHome(request):
     Tasks = models.Task.objects.all()
-    checks = models.TaskDone.objects.all()
-    print(Tasks)
-    return render(request,'TodoHome.html', {'Tasks': Tasks, 'checks': checks})
+    return render(request,'TodoHome.html', {'Tasks': Tasks})
 
 def TodoCreate(request):
     form = forms.TaskForm()
@@ -19,3 +17,14 @@ def TodoCreate(request):
             form.save()
             return redirect('Tasks')
     return render(request, 'TodoCreate.html',{'form': form})
+
+def TodoUpdate(request, key):
+    task = models.Task.objects.get(id = key)
+    form = forms.TaskForm(instance = task)
+
+    if request.method == 'POST':
+        form2 = forms.TaskForm(request.POST, instance= task)
+        if form2.is_valid():
+            form2.save()
+            return redirect('Tasks')
+    return render(request, 'TodoUpdate.html', {'form': form})
