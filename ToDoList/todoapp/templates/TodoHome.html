@@ -46,9 +46,7 @@
                     </form>
                 </td>
                 <td>
-                    <form action="/todo-delete/{{task.id}}" method="post"> {% csrf_token %}
-                        <button>Delete</button>
-                    </form>
+                    <a href="/todo-delete/{{task.id}}">Delete</a>
                 </td>
             </tr>
             {% endfor %}
