@@ -10,7 +10,7 @@
     <table>
         <thead>
             <tr>
-                <td>Sr. No.</td>
+                <td>ID</td>
                 <td>Name</td>
                 <td>Time</td>
                 <td>Description</td>
@@ -43,6 +43,11 @@
                 <td>
                     <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
                         <button>Update</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/todo-delete/{{task.id}}" method="post"> {% csrf_token %}
+                        <button>Delete</button>
                     </form>
                 </td>
             </tr>

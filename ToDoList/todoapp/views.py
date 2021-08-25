@@ -21,10 +21,16 @@ def TodoCreate(request):
 def TodoUpdate(request, key):
     task = models.Task.objects.get(id = key)
     form = forms.TaskForm(instance = task)
-
-    if request.method == 'POST':
-        form2 = forms.TaskForm(request.POST, instance= task)
-        if form2.is_valid():
-            form2.save()
-            return redirect('Tasks')
+    form2 = forms.TaskForm(request.POST, instance= task)
+    if form2.is_valid():
+        form2.save()
+        return redirect('Tasks')
     return render(request, 'TodoUpdate.html', {'form': form})
+
+def TodoDelete(request, key):
+    task = models.Task.objects.get(id = key)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('Tasks')
+    return render(request, 'TodoDelete.html', {'task': task})
+
