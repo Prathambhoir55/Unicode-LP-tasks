@@ -1,7 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+
 class Task(models.Model):
+    task_user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     id = models.AutoField(primary_key=True) 
     task_name = models.CharField(max_length=100)
     task_time = models.TimeField()
@@ -10,8 +13,3 @@ class Task(models.Model):
 
     def __str__(self):
         return self.task_name
-
-
-class TaskDone(models.Model):
-    task_name = models.ForeignKey(Task, on_delete=models.CASCADE, null=True, blank=True)
-    task_done = models.BooleanField()

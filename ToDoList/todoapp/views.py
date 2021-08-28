@@ -1,11 +1,17 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from . import forms
 from . import models
 import requests
+from django.contrib.auth.models import User
 
+def TodoUser(request):
+    users=User.objects.all
+    return render(request, 'TodoUser.html', {'users': users})
 
-def TodoHome(request):
-    Tasks = models.Task.objects.all()
+def TodoHome(request, pk):
+    Tasks = models.Task.objects.filter(task_user = pk)
+    # print(Tasks)
     return render(request,'TodoHome.html', {'Tasks': Tasks})
 
 def TodoCreate(request):
@@ -24,6 +30,7 @@ def TodoUpdate(request, key):
     form2 = forms.TaskForm(request.POST, instance= task)
     if form2.is_valid():
         form2.save()
+        print(form2)
         return redirect('Tasks')
     return render(request, 'TodoUpdate.html', {'form': form})
 
