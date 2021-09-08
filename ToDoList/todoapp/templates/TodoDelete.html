@@ -7,7 +7,7 @@
     <title>Delete Task</title>
 </head>
 <body>
-    <form action="" method="post">
+    <form action="" method="post"> {% csrf_token %}
         <p>Are you sure you want to delete Task "{{task}}"?</p>
         <input type="submit" value="Delete">
     </form>

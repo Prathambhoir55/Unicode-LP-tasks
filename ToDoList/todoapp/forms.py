@@ -1,11 +1,11 @@
 from django.db.models import fields
 from django.forms import ModelForm
 from .models import Task
-from django.contrib.auth.models import User
+from accounts.models import MyUser
 
 class UserForm(ModelForm):
     class Meta:
-        model = User
+        model = MyUser
         fields = '__all__'
 
 class TaskForm(ModelForm):

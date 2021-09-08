@@ -7,56 +7,71 @@
     <title>TodoHome</title>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <td>ID</td>
-                <td>Name</td>
-                <td>Time</td>
-                <td>Description</td>
-                <td>Done?</td>
-            </tr>
-        </thead>
+    {% if user.is_authenticated %}
+        <h3>Hi {{ user.username }}! </h3>
+        <img src="{{ user.user_image.url }}" class="img-responsive" style="width: 10%; float: left; margin-right: 10px;" />
+        <p>Welcome</p>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Time</td>
+                    <td>Description</td>
+                    <td>Done?</td>
+                    <td>Period</td>
+                </tr>
+            </thead>
 
-        <tbody>
-            {%for task in Tasks%}
-            <tr>
-                <td>
-                    {{task.id}}
-                </td>
-                <td>
-                    {{task.task_name}}
-                </td>
-                <td>
-                    {{task.task_time}}
-                </td>
-                <td>
-                    {{task.task_desc}}
-                </td>
-                <td>
-                    {% if task.task_done %}
-                        Done
-                    {% else %}
-                        Pending
-                    {% endif %}
-                </td>
-                <td>
-                    <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
-                        <button>Update</button>
-                    </form>
-                </td>
-                <td>
-                    <a href="/todo-delete/{{task.id}}">Delete</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            <tbody>
+                {%for task in Tasks%}
+                <tr>
+                    <td>
+                        {{task.id}}
+                    </td>
+                    <td>
+                        {{task.task_name}}
+                    </td>
+                    <td>
+                        {{task.task_time}}
+                    </td>
+                    <td>
+                        {{task.task_desc}}
+                    </td>
+                    <td>
+                        {% if task.task_done %}
+                            Done
+                        {% else %}
+                            Pending
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{task.timespan}}
+                    </td>
+                    <td>
+                        <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
+                            <button>Update</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="/todo-delete/{{task.id}}">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <form action="{% url 'Create Task' pk %}" method="post"> {% csrf_token %}
+            <button>Create</button>
+        </form>
+        <p><a href="{% url 'logout' %}">logout</a></p>
+    {% else %}
+        <p>Welcome</p>
+        <p>Kindly login or signup</p>
+        <a href="{% url 'login' %}">Login</a> |
+        <a href="{% url 'accounts:signup' %}">Sign Up</a>
+    {% endif %}
     
-    <br>
-    <form action="/todo-create" method="post"> {% csrf_token %}
-        <button>Create</button>
-    </form>
     <br>
     <!-- <form action="/todo-update/{{task.id}}" method="post"> {% csrf_token %}
         <button>Update</button> -->
